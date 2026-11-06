@@ -1,0 +1,43 @@
+name: Sync Gitee Source
+
+# 每日从 Gitee 原始仓库同步资料，内容有变化才提交
+on:
+  schedule:
+    - cron: '30 21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-gitee-${{ github.repository }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Sync from Gitee
+        run: python3 scripts/sync-gitee.py --commit
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### 同步结果"
+            echo ""
+            echo "- 仓库：${{ github.repository }}"
+            echo "- 时间：$(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo "- 最新提交：$(git log -1 --format='%h %s' || echo 无)"
+          } >> "$GITHUB_STEP_SUMMARY"

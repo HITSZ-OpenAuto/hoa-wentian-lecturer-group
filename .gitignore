@@ -1,0 +1,57 @@
+# ---- 编辑器与 IDE ----
+.vscode/
+.idea/
+*.code-workspace
+*.suo
+*.user
+
+# ---- 操作系统 ----
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ---- Office 临时文件与锁文件 ----
+~$*
+*.tmp
+*.temp
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# ---- LaTeX ----
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.xdv
+
+# ---- 依赖与构建产物 ----
+node_modules/
+build/
+dist/
+
+# ---- 隐私与凭据：严禁提交 ----
+*.令牌.txt
+*令牌*.txt
+*token*.txt
+*.key
+*.pem
+.env
+.env.*
+
+# ---- 临时下载 ----
+*.part
+*.download
+*.crdownload

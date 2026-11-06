@@ -1,0 +1,21 @@
+# 统一行尾，避免 Windows / macOS 协作时整文件被标记为修改
+* text=auto
+
+# 二进制资料，禁止 Git 做文本换行转换和差异比较
+*.pdf  binary
+*.docx binary
+*.doc  binary
+*.pptx binary
+*.ppt  binary
+*.xlsx binary
+*.xls  binary
+*.zip  binary
+*.7z   binary
+*.rar  binary
+*.mp4  binary
+*.mov  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ttf  binary

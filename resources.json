@@ -1,0 +1,22 @@
+{
+  "id": "wentian",
+  "title": "哈尔滨 问天讲师团",
+  "subtitle": "哈尔滨工业大学未来技术学院 · 学业支持资料库",
+  "summary": "问天讲师团整理的课程复习资料，收录离散数学、理论力学B、机械工程制图、C 语言等科目的讲座讲义、题型总结与录播视频。站内已完整镜像，可直接下载。",
+  "origin": "https://gitee.com/jacobbbbb/lecturer-group",
+  "originLabel": "Gitee 原始仓库",
+  "access": "资料已完整镜像到站内，可直接下载；原始仓库公开可访问。",
+  "license": "木兰宽松许可证 第 2 版（Mulan PSL v2）",
+  "licenseUrl": "https://gitee.com/jacobbbbb/lecturer-group/blob/master/LICENSE",
+  "notice": "资料由问天讲师团成员原创整理，转载或二次整理时请注明来源：问天讲师团（哈尔滨工业大学未来技术学院）。",
+  "external": [],
+  "netdisk": false,
+  "policy": {
+    "mirroredMaxSize": 104857600,
+    "mirroredCount": 10,
+    "externalCount": 0,
+    "mirroredSize": 267793059,
+    "externalSize": 0,
+    "syncedAt": 1793985263
+  }
+}
