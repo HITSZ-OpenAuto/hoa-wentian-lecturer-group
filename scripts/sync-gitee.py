@@ -27,7 +27,8 @@ import tempfile
 import time
 from pathlib import Path
 
-# GitHub 单文件硬限制 100 MiB，超过一律不入库
+# 入库体积上限：单文件超过 100 MiB 的不入库，站内列出并跳原始仓库下载
+# （GitHub 单文件硬限制就是 100 MiB）
 MIRROR_MAX_SIZE = 100 * 1024 * 1024
 
 # 原始仓库的文件改名后放进 docs/，
@@ -200,8 +201,10 @@ def main() -> int:
                         "name": Path(item["path"]).name,
                         "size": item["size"],
                         "time": item["mtime"],
-                        "url": f"{args.source.removesuffix('.git')}/raw/master/"
-                        + "/".join(urllib_parse(item["path"])),
+                        # Gitee 的 raw 直链对大文件返回 403，改指到仓库页面，
+                        # 用户可在页面上点「下载」
+                        "url": f"{args.source.removesuffix('.git')}/blob/master/"
+                        + urllib_quote(item["path"]),
                         "note": "体积超过 GitHub 单文件限制，保留在原始仓库下载",
                     }
                 )
@@ -245,7 +248,7 @@ def main() -> int:
     return 0
 
 
-def urllib_parse(path: str) -> str:
+def urllib_quote(path: str) -> str:
     from urllib.parse import quote
 
     return quote(path)
