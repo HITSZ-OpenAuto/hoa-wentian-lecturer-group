@@ -41,8 +41,8 @@
   },
   "resources.json": {
     "size": 1100,
-    "time": 1793985017,
-    "hash": "145398f2d5489226ab936a9523cc452286945cde"
+    "time": 1793985553,
+    "hash": "6dd9c75e3b5d20438d8137c826661b8c76dd4bc7"
   },
   "scripts/sync-and-push.sh": {
     "size": 1049,
@@ -50,9 +50,9 @@
     "hash": "145398f2d5489226ab936a9523cc452286945cde"
   },
   "scripts/sync-gitee.py": {
-    "size": 8483,
-    "time": 1793985017,
-    "hash": "145398f2d5489226ab936a9523cc452286945cde"
+    "size": 9118,
+    "time": 1793985553,
+    "hash": "6dd9c75e3b5d20438d8137c826661b8c76dd4bc7"
   },
   "scripts/update-worktree.py": {
     "size": 4961,
