@@ -13,10 +13,10 @@
   "netdisk": false,
   "policy": {
     "mirroredMaxSize": 104857600,
-    "mirroredCount": 10,
+    "mirroredCount": 47,
     "externalCount": 0,
-    "mirroredSize": 267793059,
+    "mirroredSize": 421039009,
     "externalSize": 0,
-    "syncedAt": 1793988666
+    "syncedAt": 1795058082
   }
 }
