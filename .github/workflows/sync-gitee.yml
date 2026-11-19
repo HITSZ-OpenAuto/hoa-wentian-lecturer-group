@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: sync-gitee-${{ github.repository }}
@@ -28,8 +29,72 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Sync from Gitee
-        run: python3 scripts/sync-gitee.py --commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/sync-gitee.py
+          git add -A
+          if git diff --staged --quiet; then
+            echo "没有变更，跳过提交"
+            exit 0
+          fi
+          git commit -m "chore: 同步 Gitee 原始仓库"
+          if git push origin HEAD:main; then
+            echo "→ 已推送到 main"
+            exit 0
+          fi
+
+          echo "直接推送 main 受仓库规则限制，改用 sync/gitee 分支创建 PR…"
+          git push --force origin HEAD:refs/heads/sync/gitee
+          pr_url=$(gh pr list --head sync/gitee --state open --json url --jq '.[0].url')
+          if [ -z "$pr_url" ]; then
+            pr_url=$(gh pr create \
+              --base main \
+              --head sync/gitee \
+              --title "chore: 同步 Gitee 原始仓库" \
+              --body "由 GitHub Actions 自动从 Gitee 原始仓库同步更新。")
+          fi
+          echo "PR: $pr_url"
+          gh pr merge "$pr_url" --squash --delete-branch
+          git fetch origin main
+          git reset --hard origin/main
+
+      # 使用 GITHUB_TOKEN 推送到 main 不会触发 on: push 的 update-worktree 工作流，
+      # 因此同步完成后在同一任务中更新 worktree 分支并按需触发站点构建。
+      - name: Update worktree
+        id: worktree
+        run: |
+          before=$(git rev-parse --verify origin/worktree 2>/dev/null || echo "")
+          python3 scripts/update-worktree.py --push
+          after=$(git rev-parse --verify worktree 2>/dev/null || echo "$before")
+          if [ "$before" != "$after" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Trigger site build
+        if: steps.worktree.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          PAT: ${{ secrets.SITE_DISPATCH_TOKEN }}
+          SITE_REPO: ${{ vars.SITE_REPO }}
+        run: |
+          if [ -z "${PAT}" ] || [ -z "${SITE_REPO}" ]; then
+            echo "未配置 SITE_DISPATCH_TOKEN / SITE_REPO，跳过站点构建触发"
+            exit 0
+          fi
+          curl --fail-with-body -sS -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${PAT}" \
+            "https://api.github.com/repos/${SITE_REPO}/actions/workflows/build.yml/dispatches" \
+            -d '{"ref":"main"}'
 
       - name: Summary
         if: always()
