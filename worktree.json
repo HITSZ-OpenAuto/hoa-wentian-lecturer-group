@@ -5,14 +5,14 @@
     "hash": "196627727e90a1d3ef1fd06032a9c9e0381a8833"
   },
   ".github/workflows/sync-gitee.yml": {
-    "size": 1004,
-    "time": 1793987023,
-    "hash": "196627727e90a1d3ef1fd06032a9c9e0381a8833"
+    "size": 3643,
+    "time": 1795057667,
+    "hash": "1ec79df9944edea63267c22511bf641bded9610d"
   },
   ".github/workflows/update-worktree.yml": {
-    "size": 1488,
-    "time": 1793987023,
-    "hash": "196627727e90a1d3ef1fd06032a9c9e0381a8833"
+    "size": 1673,
+    "time": 1795057667,
+    "hash": "1ec79df9944edea63267c22511bf641bded9610d"
   },
   ".gitignore": {
     "size": 625,
@@ -50,9 +50,9 @@
     "hash": "196627727e90a1d3ef1fd06032a9c9e0381a8833"
   },
   "scripts/sync-gitee.py": {
-    "size": 9355,
-    "time": 1793988667,
-    "hash": "0ecb6e7be962667e63a81d0a059cb8d06e6bf6a1"
+    "size": 9584,
+    "time": 1795057667,
+    "hash": "1ec79df9944edea63267c22511bf641bded9610d"
   },
   "scripts/update-worktree.py": {
     "size": 5332,
