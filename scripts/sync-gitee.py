@@ -51,7 +51,13 @@ def log(message: str) -> None:
 
 
 def run(args: list[str], cwd: str | None = None) -> str:
-    result = subprocess.run(args, check=True, capture_output=True, text=True, cwd=cwd)
+    try:
+        result = subprocess.run(args, check=True, capture_output=True, text=True, cwd=cwd)
+    except subprocess.CalledProcessError as exc:
+        detail = (exc.stderr or exc.stdout or "").strip()
+        if detail:
+            log(f"命令执行失败：{' '.join(args)}\n{detail}")
+        raise
     return result.stdout.strip()
 
 
@@ -83,8 +89,8 @@ def collect(source_dir: Path) -> list[dict]:
         relative = str(path.relative_to(source_dir))
         if relative.startswith(".git/"):
             continue
-        # 仓库自身的文件不参与同步；但被改名的文件（如 README.md）要同步
-        if relative in REPO_OWNED and relative not in RENAME:
+        # 仓库自身的文件/目录不参与同步；但被改名的文件（如 README.md）要同步
+        if is_repo_owned(relative) and relative not in RENAME:
             continue
         entries.append(
             {
