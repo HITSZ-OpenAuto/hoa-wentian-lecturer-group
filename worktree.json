@@ -46,8 +46,8 @@
   },
   "resources.json": {
     "size": 1100,
-    "time": 1795141644,
-    "hash": "9ca75ef68099380b4a0f50e1b93e072929ff1783"
+    "time": 1795228631,
+    "hash": "24a69283da91c4b1e5a12565093df9f719ef3b71"
   },
   "scripts/sync-and-push.sh": {
     "size": 1049,
